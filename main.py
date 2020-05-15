@@ -22,7 +22,18 @@ else:
 # Set the clock speed delta
 clock = pygame.time.Clock()
 
-score = 0
+score_value = 0
+# font = pygame.font.Font('freesansbold.ttf', 32)
+font = pygame.font.Font('SPACE.ttf', 28)
+textX = 10
+textY = 10
+
+
+def show_score(x, y):
+    score = font.render("Score: " + str(score_value), True, (255, 255, 255))
+    screen.blit(score, (x, y))
+
+
 shots_fired = 0
 
 
@@ -114,8 +125,6 @@ while running:
                 if bullet_state == "ready":
                     bulletX = playerX
                     fire_bullet(bulletX, bulletY)
-                    shots_fired += 1
-                    print("Shots fired: " + str(shots_fired))
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or pygame.K_LEFT:
@@ -150,8 +159,7 @@ while running:
         if collision:
             bulletY = int(height * 0.85)
             bullet_state = "ready"
-            score += 1
-            print("Your score: " + str(score))
+            score_value += 1
             enemyX[i] = random.randint(0, (height - 64))
             enemyY[i] = random.randint(0, 150)
 
@@ -167,9 +175,10 @@ while running:
         bulletY -= bulletY_change
 
     player(playerX, playerY)
-
+    show_score(textX, textY)
     # Update the screen
     pygame.display.update()
     clock.tick(60)
 
-if shots_fired < 0: print("Hit percentage is: " + str((score / shots_fired) * 100) + "%")
+if shots_fired > 0:
+    print("Hit percentage is: " + str((score / shots_fired) * 100) + "%")
