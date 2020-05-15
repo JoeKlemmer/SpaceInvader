@@ -46,11 +46,19 @@ playerY = int(height * 0.85)
 playerX_change = 0
 
 # Set enemyImg <https://icons8.com/icons/set/planet-globe"> UFO icon by icons8.com
-enemyImg = pygame.image.load("enemy.png")
-enemyX = random.randint(0, (height - 64))
-enemyY = random.randint(0, (int(height * 0.10)))
-enemyX_change = 4
-enemyY_change = 40
+enemyImg = []
+enemyX = []
+enemyY = []
+enemyX_change = []
+enemyY_change = []
+num_of_enemies = 6
+
+for i in range(num_of_enemies):
+    enemyImg.append(pygame.image.load("enemy.png"))
+    enemyX.append(random.randint(0, (height - 64)))
+    enemyY.append(random.randint(0, (int(height * 0.10))))
+    enemyX_change.append(4)
+    enemyY_change.append(40)
 
 # Bullet Icon made by Those Icons https://www.flaticon.com/authors/those-icons> from www.flaticon.com
 # State of 'ready' is waiting
@@ -69,8 +77,8 @@ def player(x, y):
 
 
 # Display enemy
-def enemy(x, y):
-    screen.blit(enemyImg, (x, y))
+def enemy(x, y, i):
+    screen.blit(enemyImg[i], (x, y))
 
 
 # Fire the bullet
@@ -127,15 +135,27 @@ while running:
     elif playerX >= width - 64:
         playerX = width - 64
 
-    enemyX += enemyX_change
+    # Keep the enemies X-axis from going off the screen
+    for i in range(num_of_enemies):
+        enemyX[i] += enemyX_change[i]
+        if enemyX[i] <= 0:
+            enemyX_change[i] = 4
+            enemyY[i] += enemyY_change[i]
+        elif enemyX[i] >= width - 64:
+            enemyX_change[i] = -4
+            enemyY[i] += enemyY_change[i]
 
-    # Keep the enemys X-axis from going off the screen
-    if enemyX <= 0:
-        enemyX_change = 4
-        enemyY += enemyY_change
-    elif enemyX >= width - 64:
-        enemyX_change = -4
-        enemyY += enemyY_change
+        # Test for collsion
+        collision = isCollision(enemyX[i], enemyY[i], bulletX, bulletY)
+        if collision:
+            bulletY = int(height * 0.85)
+            bullet_state = "ready"
+            score += 1
+            print("Your score: " + str(score))
+            enemyX[i] = random.randint(0, (height - 64))
+            enemyY[i] = random.randint(0, 150)
+
+        enemy(enemyX[i], enemyY[i], i)
 
     # Bullet movement
     if bulletY <= 0:
@@ -146,21 +166,10 @@ while running:
         fire_bullet(bulletX, bulletY)
         bulletY -= bulletY_change
 
-    # Test for collsion
-    collision = isCollision(enemyX, enemyY, bulletX, bulletY)
-    if collision:
-        bulletY = int(height * 0.85)
-        bullet_state = "ready"
-        score += 1
-        print("Your score: " + str(score))
-        enemyX = random.randint(0, (height - 64))
-        enemyY = random.randint(0, 150)
-
     player(playerX, playerY)
-    enemy(enemyX, enemyY)
 
     # Update the screen
     pygame.display.update()
     clock.tick(60)
 
-print("Hit percentage is: " + str((score / shots_fired) * 100) + "%")
+if shots_fired < 0: print("Hit percentage is: " + str((score / shots_fired) * 100) + "%")
