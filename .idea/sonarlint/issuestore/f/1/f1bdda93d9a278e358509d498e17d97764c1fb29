@@ -1,0 +1,9 @@
+
+upython:S117S"RRename this parameter "enemyY" to match the regular expression ^[_a-z][a-z0-9_]*$.(ø‹ùçøÿÿÿÿ8¹£Ë§¡.
+=python:S125"Remove this commented out code.(ì·³ò8»¡¨¯¡.
+vpython:S117S"SRename this parameter "bulletY" to match the regular expression ^[_a-z][a-z0-9_]*$.(ø‹ùçøÿÿÿÿ8¹£Ë§¡.
+xpython:S1542S"TRename function "isCollision" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ø‹ùçøÿÿÿÿ8á³ê§¡.
+upython:S117S"RRename this parameter "enemyX" to match the regular expression ^[_a-z][a-z0-9_]*$.(ø‹ùçøÿÿÿÿ8¹£Ë§¡.
+vpython:S117S"SRename this parameter "bulletX" to match the regular expression ^[_a-z][a-z0-9_]*$.(ø‹ùçøÿÿÿÿ8¹£Ë§¡.
+Npython:S1066j"/Merge this if statement with the enclosing one.(÷Èóå8ºîŒ§¡.
+Npython:S1066q"/Merge this if statement with the enclosing one.(¹Îñ8òÖ—¦¡.
