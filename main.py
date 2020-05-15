@@ -162,3 +162,5 @@ while running:
     # Update the screen
     pygame.display.update()
     clock.tick(60)
+
+print("Hit percentage is: " + str((score / shots_fired) * 100) + "%")
