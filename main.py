@@ -2,6 +2,7 @@ import pygame
 import random
 import time
 import math
+from pygame import mixer
 
 # Initialize pygame engine
 pygame.init()
@@ -18,6 +19,10 @@ if width == 800:
     background = pygame.image.load("background-902x600.jpg")
 else:
     background = pygame.image.load("background-1154x768.jpg")
+
+# Background sound
+mixer.music.load("background.wav")
+mixer.music.play(-1)
 
 # Set the clock speed delta
 clock = pygame.time.Clock()
@@ -123,6 +128,8 @@ while running:
                 playerX_change = 6
             if event.key == pygame.K_SPACE:
                 if bullet_state == "ready":
+                    bullet_sound = mixer.Sound("laser.wav")
+                    bullet_sound.play()
                     bulletX = playerX
                     fire_bullet(bulletX, bulletY)
 
@@ -157,6 +164,8 @@ while running:
         # Test for collsion
         collision = isCollision(enemyX[i], enemyY[i], bulletX, bulletY)
         if collision:
+            explosion_sound = mixer.Sound("explosion.wav")
+            explosion_sound.play()
             bulletY = int(height * 0.85)
             bullet_state = "ready"
             score_value += 1
@@ -176,9 +185,7 @@ while running:
 
     player(playerX, playerY)
     show_score(textX, textY)
+
     # Update the screen
     pygame.display.update()
     clock.tick(60)
-
-if shots_fired > 0:
-    print("Hit percentage is: " + str((score / shots_fired) * 100) + "%")
