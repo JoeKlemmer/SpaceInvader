@@ -8,8 +8,8 @@ from pygame import mixer
 pygame.init()
 
 # Set the window size
-size = width, height = 1024, 768
-# size = width, height = 800, 600
+# size = width, height = 1024, 768
+size = width, height = 800, 600
 
 # Create the screen (window)
 screen = pygame.display.set_mode(size)
@@ -33,10 +33,18 @@ font = pygame.font.Font('SPACE.ttf', 28)
 textX = 10
 textY = 10
 
+# Game Over text
+over_font = pygame.font.Font('SPACE.ttf', 64)
+
 
 def show_score(x, y):
     score = font.render("Score: " + str(score_value), True, (255, 255, 255))
     screen.blit(score, (x, y))
+
+
+def game_over_text():
+    over_text = font.render("GAME OVER!", True, (255, 255, 255))
+    screen.blit(over_text, (int((width * .25) + 96), int((height * .35) + 64)))
 
 
 shots_fired = 0
@@ -153,6 +161,14 @@ while running:
 
     # Keep the enemies X-axis from going off the screen
     for i in range(num_of_enemies):
+
+        # Game over
+        if enemyY[i] > 100:  # Use playerY in production
+            for j in range(num_of_enemies):
+                enemyY[j] = 2000
+            game_over_text()
+            break
+
         enemyX[i] += enemyX_change[i]
         if enemyX[i] <= 0:
             enemyX_change[i] = 4
