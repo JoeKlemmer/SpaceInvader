@@ -8,8 +8,8 @@ from pygame import mixer
 pygame.init()
 
 # Set the window size
-# size = width, height = 1024, 768
-size = width, height = 800, 600
+size = width, height = 1024, 768
+# size = width, height = 800, 600
 
 # Create the screen (window)
 screen = pygame.display.set_mode(size)
@@ -43,7 +43,7 @@ def show_score(x, y):
 
 
 def game_over_text():
-    over_text = font.render("GAME OVER!", True, (255, 255, 255))
+    over_text = font.render("GAME OVER! Hit % - " + str(int(hit_average)), True, (255, 255, 255))
     screen.blit(over_text, (int((width * .25) + 96), int((height * .35) + 64)))
 
 
@@ -134,12 +134,15 @@ while running:
                 playerX_change = -6
             if event.key == pygame.K_RIGHT:
                 playerX_change = 6
+
+            # Fire the bullet with the space key
             if event.key == pygame.K_SPACE:
                 if bullet_state == "ready":
                     bullet_sound = mixer.Sound("laser.wav")
                     bullet_sound.play()
                     bulletX = playerX
                     fire_bullet(bulletX, bulletY)
+                    shots_fired += 1
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or pygame.K_LEFT:
@@ -163,9 +166,10 @@ while running:
     for i in range(num_of_enemies):
 
         # Game over
-        if enemyY[i] > 100:  # Use playerY in production
+        if enemyY[i] > playerY - 25:  # Use playerY in production
             for j in range(num_of_enemies):
                 enemyY[j] = 2000
+            hit_average = score_value / shots_fired
             game_over_text()
             break
 
