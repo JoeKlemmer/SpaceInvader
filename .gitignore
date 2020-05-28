@@ -1,0 +1,6 @@
+.git
+.idea
+.idea/*
+.mypy_cache
+.*~
+*~
