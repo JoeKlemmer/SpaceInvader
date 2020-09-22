@@ -29,12 +29,12 @@ clock = pygame.time.Clock()
 
 score_value = 0
 # font = pygame.font.Font('freesansbold.ttf', 32)
-font = pygame.font.Font('SPACE.ttf', 28)
+font = pygame.font.Font('Space.ttf', 28)
 textX = 10
 textY = 10
 
 # Game Over text
-over_font = pygame.font.Font('SPACE.ttf', 64)
+over_font = pygame.font.Font('Space.ttf', 64)
 
 
 def show_score(x, y):
